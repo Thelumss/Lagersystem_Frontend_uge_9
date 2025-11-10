@@ -1,0 +1,12 @@
+<div class="align-center">
+  <h2>User Login</h2>
+  <form [formGroup]="loginForm">
+    <input placeholder="Email" type="email" mdInput formControlName="email"  />
+    <input placeholder="Password" type="password" mdInput formControlName="password" />
+    <div class="btn-div">
+      <button type="submit" [disabled]="!loginForm.valid" class="login-btn">
+        Login
+      </button>
+    </div>
+  </form>
+</div>

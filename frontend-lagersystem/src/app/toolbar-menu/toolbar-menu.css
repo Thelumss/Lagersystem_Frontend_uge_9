@@ -1,0 +1,44 @@
+.topbar {
+  width: auto;
+  height: 60px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.topbar .logo {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.topbar .nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.topbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.topbar a.active {
+  border-bottom: 2px solid #ffcc00;
+}
+
+.top-menu button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #eee;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.top-menu button.active {
+  background-color: #1976d2;
+  color: white;
+}
+

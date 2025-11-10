@@ -1,0 +1,63 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { WarehouseApiCallServices } from '../../../services/warehouse-api-call-services';
+
+
+export interface Warehouse {
+  name: string;
+}
+
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [MatTableModule, MatPaginatorModule,],
+  templateUrl: './home.html',
+  styleUrl: './home.css',
+})
+export class Home {
+
+   
+  constructor(private api: WarehouseApiCallServices) { }
+  private _liveAnnouncer = inject(LiveAnnouncer);
+
+  displayedColumns: string[] = ['name'];
+  dataSource = new MatTableDataSource<Warehouse>([]);
+  Warehouse: any[] = [];
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.loadProducts();
+  }
+
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  loadProducts() {
+    this.api.getWarehouse().subscribe({
+      next: res => {
+        this.Warehouse = res;
+        this.dataSource.data = this.Warehouse;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+      error: err => console.error('API error:', err)
+    });
+  }
+}
