@@ -6,7 +6,15 @@
   flex-direction: column;
   height: 98%;
 }
-
+.test {
+  position: absolute;
+  top: 12%;         
+  left: 10px;        
+  background-color: #f0f0f0; 
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
 form {
   display: flex;
   flex-direction: column;

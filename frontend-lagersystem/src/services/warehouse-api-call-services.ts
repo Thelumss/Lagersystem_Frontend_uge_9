@@ -12,7 +12,7 @@ export class WarehouseApiCallServices {
   constructor(private http: HttpClient) {}
 
   getWarehouse(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl+"homeView");
   }
 
 }
