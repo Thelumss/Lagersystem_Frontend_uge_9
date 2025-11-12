@@ -11,6 +11,6 @@ export const routes: Routes = [
     {path: 'customer', component: Customer},
     {path: 'product', component: Product},
     {path: 'home', component: Home},
-    {path: '**', redirectTo: 'customer'},
+    {path: '**', redirectTo: 'home'},
 
 ];

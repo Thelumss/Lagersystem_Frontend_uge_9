@@ -25,7 +25,7 @@ export class AuthService {
     return this.http.post<any>('http://localhost:5000/api/auth/', userDetails)
       .pipe(
         map(response => {
-          localStorage.setItem('JWT_Token', response.token);
+          localStorage.setItem('JWT_Token', response.access_token);
           this.setData(true);
           return true;
         }),

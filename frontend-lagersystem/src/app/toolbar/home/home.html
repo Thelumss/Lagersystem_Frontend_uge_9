@@ -11,6 +11,7 @@
     </mat-form-field>
   </div>
 
+  <ng-container>
   <div class="table">
     <table mat-table [dataSource]="dataSource"
       class="mat-elevation-z8">
@@ -49,4 +50,6 @@
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
+  </ng-container>
+  <ng-container></ng-container>
 </div>

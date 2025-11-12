@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../../services/auth-service';
 import { NgIf } from '@angular/common';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { AdminApiCallServices } from '../../../services/admin-api-call-services';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +13,12 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 })
 
 export class Admin implements OnInit, OnDestroy {
+CreateNewUser() {
+  this.adminService.createUser(this.test.value).subscribe(()=>{
+    this.test.reset();
+  });
+
+}
   
   loginForm!: FormGroup;
   test!: FormGroup;
@@ -42,12 +49,10 @@ export class Admin implements OnInit, OnDestroy {
       password: new FormControl('', Validators.required),
     });
   }
-  tester() {
-  throw new Error('Method not implemented.');
-  }
   
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private adminService: AdminApiCallServices
   ) {
   }
   ngOnDestroy(): void {

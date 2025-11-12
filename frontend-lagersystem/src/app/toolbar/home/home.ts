@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { WarehouseApiCallServices } from '../../../services/warehouse-api-call-services';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf } from '@angular/common';
 
 
 export interface Warehouse {
@@ -19,7 +20,7 @@ export interface Warehouse {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule,MatInput,MatFormFieldModule,],
+  imports: [MatTableModule, MatPaginatorModule, MatInput, MatFormFieldModule, NgIf],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -27,7 +28,10 @@ export class Home {
 
    
   constructor(private api: WarehouseApiCallServices) { }
+  
   private _liveAnnouncer = inject(LiveAnnouncer);
+
+  state: boolean = true;
 
   displayedColumns: string[] = ['id','warehouse_id','product_id','quantity'];
   dataSource = new MatTableDataSource<Warehouse>([]);
@@ -69,5 +73,8 @@ export class Home {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  changeView(){
   }
 }
