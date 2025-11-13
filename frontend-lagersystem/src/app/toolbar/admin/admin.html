@@ -1,6 +1,8 @@
-<div class="currentUser">
-  current user: 1
-</div>
+<ng-container *ngIf="isLoggedIn">
+  <div class="currentUser">
+    current user: 1
+  </div>
+</ng-container>
 <div class="align-center">
   <ng-container *ngIf="!isLoggedIn">
   <h2>User Login</h2>
@@ -29,5 +31,25 @@
     </div>
   </form>
     </div>
+
+  <div class="table">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="navn">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Navn </th>
+    <td mat-cell *matCellDef="let element"> {{element.navn}} </td>
+  </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+
   </ng-container>
 </div>
