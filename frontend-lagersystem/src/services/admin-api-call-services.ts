@@ -9,13 +9,14 @@ export class AdminApiCallServices {
   
   constructor(private http: HttpClient){}
 
+  private apiUrl = 'http://localhost:5000/api/auth/';
+
   createUser(userDetails: { username: string, password: string }) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('JWT_Token')}`,
       'Content-Type': 'application/json'
     });
-    console.log(localStorage.getItem('JWT_Token'));
-      return this.http.post<any>('http://localhost:5000/api/auth/register', userDetails, { headers})
+      return this.http.post<any>(this.apiUrl+'register', userDetails, { headers})
         .pipe(
           map(response => {
             return response;
@@ -26,4 +27,20 @@ export class AdminApiCallServices {
           })
         );
     }
+
+    getProfiles(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('JWT_Token')}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get(this.apiUrl+'profile/', {headers});
+  }
+
+    getMeProfile(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('JWT_Token')}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get(this.apiUrl+'profile/me', {headers});
+  }
 }

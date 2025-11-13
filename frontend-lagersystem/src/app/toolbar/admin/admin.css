@@ -49,3 +49,8 @@ input[type="password" i] {
   cursor: pointer;
   letter-spacing: 1px;
 }
+.table{
+  position: absolute;
+  top: 52%;         
+  left: 10px;  
+}

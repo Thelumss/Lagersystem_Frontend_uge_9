@@ -11,7 +11,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 export interface Product {
   id: number;
-  navn: string;
+  name: string;
 }
 
 @Component({
@@ -23,16 +23,22 @@ export interface Product {
 
 export class Admin implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['id', 'navn'];
+  displayedColumns: string[] = ['id', 'name'];
   dataSource = new MatTableDataSource<Product>([]);
-  products: Product[] = [{id:1,navn:'test'}];
+  products: Product[] = [];
 
   CreateNewUser() {
-  this.adminService.createUser(this.test.value).subscribe(()=>{
-    this.test.reset();
-  });
+    (this.adminService.createUser(this.test.value)).subscribe(()=>{
+      this.test.reset();
+    });
 
-}
+    this.tableRefresh();
+  }
+
+  user={
+    name: 'test',
+    id: 1
+  };
   
   loginForm!: FormGroup;
   test!: FormGroup;
@@ -51,8 +57,38 @@ export class Admin implements OnInit, OnDestroy {
     });
     
     this.isLoggedIn = !!this.authService.getToken();
+
+    if (this.isLoggedIn){
+      this.tableRefresh();
+      this.CurrentUserupdate();
+    }
   }
   
+  tableRefresh(){
+      this.adminService.getProfiles().subscribe({
+        next: (res) => {
+          this.products = res;
+          this.dataSource.data = this.products;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        },
+        error: (err) => {
+          console.error('Error fetching profiles:', err); 
+        },
+      });
+  }
+
+  CurrentUserupdate(){
+    this.adminService.getMeProfile().subscribe({
+        next: (res) => {
+          this.user = res;
+          console.log(res);
+        },
+        error: (err) => {
+          console.error('Error fetching profiles:', err); 
+        },
+      });
+  }
   
   private createForm() {
     this.loginForm = new FormGroup({
@@ -91,9 +127,19 @@ export class Admin implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   onSubmit() {
-    this.authService.login(this.loginForm.value).subscribe(()=>{
+  // Perform login first
+  this.authService.login(this.loginForm.value).subscribe({
+    next: () => {
       this.loginForm.reset();
-    });
-  }
+      this.tableRefresh();
+      this.CurrentUserupdate();
+
+    },
+    error: (err) => {
+      console.error('Login failed:', err);
+    },
+  });
+}
+
   
 }
