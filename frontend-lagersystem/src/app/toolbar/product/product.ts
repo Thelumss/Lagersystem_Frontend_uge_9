@@ -4,6 +4,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ProductApiCallServices } from '../../../services/product-api-call-services';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 export interface Product {
   price: number;
@@ -14,12 +16,17 @@ export interface Product {
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule,MatSortModule],
+  imports: [MatTableModule, MatPaginatorModule,MatSortModule,MatInput,MatFormFieldModule],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })
 
 export class Product {
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   
   constructor(private api: ProductApiCallServices) { }
 

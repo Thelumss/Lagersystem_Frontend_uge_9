@@ -1,4 +1,15 @@
 <div>
+  <div class="search-box">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="products list"
+      />
+    </mat-form-field>
+  </div>
+
   <div class="table">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 

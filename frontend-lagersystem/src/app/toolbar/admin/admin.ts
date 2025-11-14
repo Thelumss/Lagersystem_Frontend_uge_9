@@ -28,20 +28,20 @@ export class Admin implements OnInit, OnDestroy {
   products: Product[] = [];
 
   CreateNewUser() {
-    (this.adminService.createUser(this.test.value)).subscribe(()=>{
-      this.test.reset();
+    (this.adminService.createUser(this.createAdminForm.value)).subscribe(()=>{
+      this.createAdminForm.reset();
     });
 
     this.tableRefresh();
   }
 
   user={
-    name: 'test',
-    id: 1
+    name: 'not_working',
+    id: -1
   };
   
   loginForm!: FormGroup;
-  test!: FormGroup;
+  createAdminForm!: FormGroup;
   isLoggedIn: boolean = false;
   private destroy$ = new Subject<void>();
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -85,7 +85,7 @@ export class Admin implements OnInit, OnDestroy {
           console.log(res);
         },
         error: (err) => {
-          console.error('Error fetching profiles:', err); 
+          console.error('Error fetching meprofile:', err); 
         },
       });
   }
@@ -95,7 +95,7 @@ export class Admin implements OnInit, OnDestroy {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
     });
-     this.test = new FormGroup({
+     this.createAdminForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
     });
@@ -139,6 +139,10 @@ export class Admin implements OnInit, OnDestroy {
       console.error('Login failed:', err);
     },
   });
+}
+
+logout(){
+  this.authService.logout();
 }
 
   

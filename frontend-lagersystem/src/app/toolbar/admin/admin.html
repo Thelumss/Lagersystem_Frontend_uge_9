@@ -2,6 +2,9 @@
   <div class="currentUser">
     Current User: {{ user.name }} (ID: {{ user.id }})
   </div>
+  <div>
+    <button class="button" style="background-color:#1E90FF; color:white" mat-flat-button (click)="logout()">logout</button>
+  </div>
 </ng-container>
 <div class="align-center">
   <ng-container *ngIf="!isLoggedIn">
@@ -21,11 +24,11 @@
       <h2 style="align-self: center;">
         Create New user
       </h2>
-    <form [formGroup]="test" (ngSubmit)="CreateNewUser()">
+    <form [formGroup]="createAdminForm" (ngSubmit)="CreateNewUser()">
       <input placeholder="new username" type="username" mdInput formControlName="username"  />
       <input placeholder="new Password" type="password" mdInput formControlName="password" />
     <div class="btn-div">
-      <button type="submit" [disabled]="!test.valid" class="login-btn">
+      <button type="submit" [disabled]="!createAdminForm.valid" class="login-btn">
         Create
       </button>
     </div>
@@ -35,6 +38,7 @@
   
   <ng-container *ngIf="isLoggedIn">
     <div class="table">
+        <h1>list of admins</h1>
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         
         <ng-container matColumnDef="id">
@@ -50,6 +54,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
     </div>
   </ng-container>
 
