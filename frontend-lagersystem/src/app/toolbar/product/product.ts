@@ -7,6 +7,7 @@ import { ProductApiCallServices } from '../../../services/product-api-call-servi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 
+// this is a interface for setup of how the admins should look
 export interface Product {
   price: number;
   name: string;
@@ -28,12 +29,15 @@ export class Product {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
+  // the constructor createing ProductApiCallServices for use  
   constructor(private api: ProductApiCallServices) { }
 
   private _liveAnnouncer = inject(LiveAnnouncer);
-
+  // displayedColumns sets up how many collumns there is needed and what they should contatin
   displayedColumns: string[] = ['name', 'price', 'status'];
+  // dataSource is what holds the data that displayedColumns shows
   dataSource = new MatTableDataSource<Product>([]);
+  // products holds the admins for when they should go over to dataSource
   products: any[] = [];
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -53,6 +57,7 @@ announceSortChange(sortState: Sort) {
     }
   }
 
+  // this makes a api call that get all of the Product information that we would want
   loadProducts() {
     this.api.getProducts().subscribe({
       next: res => {

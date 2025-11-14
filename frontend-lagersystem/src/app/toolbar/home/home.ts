@@ -6,9 +6,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { WarehouseApiCallServices } from '../../../services/warehouse-api-call-services';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgIf } from '@angular/common';
 
-
+// this is a interface for setup of how the Warehouse should look
 export interface Warehouse {
   id: string;
   warehouse_id: string;
@@ -26,15 +25,15 @@ export interface Warehouse {
 })
 export class Home {
 
-   
+  // the constructor createing WarehouseApiCallServices for use  
   constructor(private api: WarehouseApiCallServices) { }
   
   private _liveAnnouncer = inject(LiveAnnouncer);
-
-  state: boolean = true;
-
+  // displayedColumns sets up how many collumns there is needed and what they should contatin
   displayedColumns: string[] = ['id','warehouse_id','product_id','quantity'];
+  // dataSource is what holds the data that displayedColumns shows
   dataSource = new MatTableDataSource<Warehouse>([]);
+  // Warehouse holds the admins for when they should go over to dataSource
   Warehouse: any[] = [];
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,7 +42,7 @@ export class Home {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.loadProducts();
+    this.loadWarehouseProducts();
   }
 
   announceSortChange(sortState: Sort) {
@@ -54,7 +53,8 @@ export class Home {
     }
   }
 
-  loadProducts() {
+  // this makes a api call that get all of the warehouse information that we would want
+  loadWarehouseProducts() {
     this.api.getWarehouse().subscribe({
       next: res => {
         this.Warehouse = res;
@@ -66,11 +66,9 @@ export class Home {
     });
   }
 
+  // This filters the elemens show in the tables based on what they write
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  changeView(){
   }
 }

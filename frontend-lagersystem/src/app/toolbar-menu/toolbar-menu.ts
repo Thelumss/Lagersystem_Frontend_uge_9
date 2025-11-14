@@ -21,24 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ToolbarMenu {
 
-  lastPressed: string = '';
-
-  Home() {
-    this.router.navigate([`home`]);
-  }
-  Customer() {
-    this.router.navigate([`customer`]);
-  }
-  Product() {
-    this.router.navigate([`product`]);
-  }
-
+  // changes the page when a buttton is clicked 
   onButtonClick(buttonName: string) {
-    this.lastPressed = buttonName;
     this.router.navigate([buttonName.toLocaleLowerCase()]);
-  }
-  isActive(buttonName: string): boolean {
-    return this.lastPressed === buttonName;
   }
     constructor(public router: Router) {
 

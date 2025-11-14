@@ -39,13 +39,17 @@ export interface Product {
 })
 export class Customer {
 
-    constructor(private api: CustomerApiCallServices) { }
+  constructor(private api: CustomerApiCallServices) { }
 
   private _liveAnnouncer = inject(LiveAnnouncer);
 
+  // displayedColumns sets up how many collumns there is needed and what they should contatin
   displayedColumns: string[] = ['invoicenummer','navn', 'pris', 'status', 'mangde'];
+  // dataSource is what holds the data that displayedColumns shows
   dataSource = new MatTableDataSource<Product>([]);
+  // products holds the admins for when they should go over to dataSource
   products: any[] = [];
+  // the defult searth that gives noting
   searchInvoiceNumber: number = 0;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -54,7 +58,7 @@ export class Customer {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.loadProducts();
+    this.loadOrders();
   }
 
 announceSortChange(sortState: Sort) {
@@ -65,11 +69,13 @@ announceSortChange(sortState: Sort) {
     }
   }
 
+  //calls the loadOrders when the search button is pressed 
   searchInvoice() {
-      this.loadProducts(this.searchInvoiceNumber);
+      this.loadOrders(this.searchInvoiceNumber);
     }
 
-  loadProducts(invoiceNumber: number = 0) {
+  // this makes a api call that get all of the Product information that we would want
+  loadOrders(invoiceNumber: number = 0) {
     if (invoiceNumber != null){
 
       this.api.getordersbycustomerId(invoiceNumber).subscribe({
