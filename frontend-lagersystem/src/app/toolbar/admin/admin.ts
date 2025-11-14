@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service';
 import { NgIf } from '@angular/common';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AdminApiCallServices } from '../../../services/admin-api-call-services';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
@@ -71,8 +71,8 @@ export class Admin implements OnInit, OnDestroy {
     // calls the createFrom funtion
     this.createForm();
     
-    // here we subscribe this.isLoggedIn with the status from the authService.currentData to always know the status of of login acros components
-    this.authService.currentData
+    // here we subscribe this.isLoggedIn with the status from the authService.loggedIn to always know the status of of login acros components
+    this.authService.loggedIn
     .pipe(takeUntil(this.destroy$))
     .subscribe(status => {
       this.isLoggedIn = status;

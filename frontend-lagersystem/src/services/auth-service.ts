@@ -8,7 +8,7 @@ import { Observable, map, catchError, of, BehaviorSubject } from 'rxjs';
 export class AuthService {
   
   private isLoggedIn = new BehaviorSubject<boolean>(false);
-  currentData = this.isLoggedIn.asObservable();
+  loggedIn = this.isLoggedIn.asObservable();
   
   constructor(private http: HttpClient) {
     this.checkToken();
