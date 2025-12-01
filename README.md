@@ -65,7 +65,7 @@ the commands listed over head are the ones used but first you must
 cd .\frontend-lagersystem\
 .....
 
-into the program proper
+# into the program proper
 
 from there you can "ng serve" or "ng serve --open"
 

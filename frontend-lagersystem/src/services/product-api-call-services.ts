@@ -8,10 +8,12 @@ import { Observable } from 'rxjs';
 
 export class ProductApiCallServices {
 
-private apiUrl = 'http://localhost:5000/api/product/';
+  // api end points for product
+  private apiUrl = 'http://localhost:5000/api/product/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  // calls to the API end point
   getProducts(): Observable<any> {
     return this.http.get(this.apiUrl);
   }

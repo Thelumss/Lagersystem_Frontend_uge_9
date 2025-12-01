@@ -6,10 +6,10 @@ import { Observable, map, catchError, of, BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  
+
   private isLoggedIn = new BehaviorSubject<boolean>(false);
   loggedIn = this.isLoggedIn.asObservable();
-  
+
   constructor(private http: HttpClient) {
     this.checkToken();
   }
@@ -21,7 +21,8 @@ export class AuthService {
     }
   }
 
-    login(userDetails: { username: string, password: string }) {
+  // the login function sends the user details and gets a jwt token back and saves it in local storage and sets the isloggedin to true so the other parts of the system can know that we are logged in
+  login(userDetails: { username: string, password: string }) {
     return this.http.post<any>('http://localhost:5000/api/auth/', userDetails)
       .pipe(
         map(response => {
@@ -37,6 +38,7 @@ export class AuthService {
       );
   }
 
+  // the logout function removes the jwt token from localstorage and set the isloggedin to false  
   logout(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('JWT_Token');
@@ -48,6 +50,7 @@ export class AuthService {
     this.isLoggedIn.next(data);
   }
 
+  // gets the token
   getToken(): string | null {
     if (typeof localStorage !== 'undefined') {
       return localStorage.getItem('JWT_Token');
